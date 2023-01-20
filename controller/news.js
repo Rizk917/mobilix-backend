@@ -1,0 +1,1 @@
+const newsController= require('../module/news.js');
