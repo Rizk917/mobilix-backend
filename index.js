@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const connection = require("./config/db.js");
 const express = require("express");
 const app = express();
+const newsRoutes= require("./routes/news.js")
 mongoose.set("strictQuery", true);
 
 connection();
