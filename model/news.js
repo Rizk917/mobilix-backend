@@ -12,10 +12,15 @@ const news=mongoose.Schema({
         type:String,
         require:true
     },
-    comment:{
-        type:Number,
+    article:{
+        type:String,
         require:true
     },
+    author:{
+        type:String,
+        require:true
+    },
+    
     date:{
         type:String,
         require:true
