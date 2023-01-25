@@ -1,5 +1,13 @@
 const mongoose = require("mongoose");
-const news=mongoose.Schema({
+const newsSchema=mongoose.Schema({
+
+    user:{
+        type: mongoose.Schema.Types.ObjectId,
+        required:true,
+        ref:'User',
+
+    },
+
     title:{
         type:String,
         require:true
@@ -31,4 +39,4 @@ const news=mongoose.Schema({
     }
     
 )
-module.exports = mongoose.model("news", news);
+module.exports = mongoose.model("news", newsSchema);
