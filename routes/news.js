@@ -7,10 +7,10 @@ const router = express.Router();
   
 
 const newsController = require("../controller/news");
-
+const {protect}=require('../middleware/authMiddleware')
 //cleanest way
-router.route('/').get(newsController.getnews).post(newsController.postnews)
-router.route('/:id').put(newsController.updateNews).delete(newsController.deletenews)
+router.route('/').get(protect,newsController.getnews).post(protect,newsController.postnews)
+router.route('/:id').put(protect,newsController.updateNews).delete(protect,newsController.deletenews)
 
 
 

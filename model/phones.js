@@ -1,6 +1,14 @@
 const mongoose = require("mongoose");
 const phonesSchema=mongoose.Schema({
-    title:{
+    phoneModel:{
+        type:String,
+        require:true
+    },
+    display:{
+        type:String,
+        require:true
+    },
+    memory:{
         type:String,
         require:true
     },
@@ -8,19 +16,23 @@ const phonesSchema=mongoose.Schema({
     //    type:String,
      //   require:true
   //  },
-    description:{
+    body:{
         type:String,
         require:true
     },
-    article:{
+    camera:{
         type:String,
         require:true
     },
-    author:{
+    vendor:{
         type:String,
         require:true
     },
     
+    isDeleted:{
+        type:Boolean,
+        require:false
+    },
     prodDate:{
         type:String,
         require:true

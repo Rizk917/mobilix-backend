@@ -7,7 +7,8 @@ const mongoose = require("mongoose");
 const connection = require("./config/db");
 const newsRoutes= require("./routes/news")
 const UserRoutes= require("./routes/user")
-mongoose.set("strictQuery", true);
+const phonesRoute= require("./routes/phones")
+const contactusRoutes= require("./routes/contactUS")
 
 
 mongoose.set("strictQuery", true);
@@ -20,6 +21,9 @@ const conn = mongoose.connection;
 app.use(express.json());
 app.use('/news', newsRoutes)
 app.use('/user',UserRoutes)
+app.use('/contactus',contactusRoutes)
+app.use('/phones',phonesRoute)
+
 const port = process.env.PORT || 3000;
 app.listen(port, console.log(`Listening on port ${port}...`));
 

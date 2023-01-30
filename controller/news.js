@@ -1,13 +1,14 @@
 const express = require("express");
 
 const newsModels = require("../model/news");
+const UserModels=require("../model/user")
 
 //view all the news
 const getnews = async (req, res) => {
   const index = await newsModels.findById(req.params.id);
   if (!index) {
     try {
-      const news = await newsModels.find();
+      const news = await newsModels.find({user: req.user.id});
       console.log("news: ", news);
       res.status(200).json(news);
     } catch (err) {
@@ -36,19 +37,31 @@ const postnews = async (req, res) => {
     res.status(400).json({ message: "Error" });
   } else {
     const newsg = await newsModels.create({
+      user:req.user.id,
       title: req.body.title,
       description: req.body.description,
       date: req.body.date,
       article: req.body.article,
       author: req.body.author,
     });
-    return res.status(200).json(postnews);
+    return res.status(200).json(newsg);
   }
 };
-
+/////////////////////////////////////////////////////////////////////////
 //Update a news article
 const updateNews = async (req, res) => {
  const articlee=await newsModels.findById(req.params.id)
+
+  const user=await UserModels.findById(req.user.id)
+  if(!user){ // check user
+    res.status(401)
+    throw new Error('User not found')
+  }
+if(articlee.user.toString()!== user.id){
+  res.status(401)// make sure articles match user
+  throw new Error('User not found')
+}
+
 if(!articlee){
     res.status(400)
 throw new Error('Article not found')
@@ -59,7 +72,7 @@ const updatedNews=await newsModels.findByIdAndUpdate(req.params.id,req.body,{
 res.status(200).json(updatedNews)
 };
 
-
+/////////////////////////////////////////////////////////////
 
 
 
@@ -92,7 +105,19 @@ res.status(200).json(updatedNews)
 
 //delete a news
 const deletenews = async (req, res) => {
+
   const newsdel = await newsModels.findById(req.params.id);
+  const user=await UserModels.findById(req.user.id)
+  // check user
+  if(!user){ 
+    res.status(401)
+    throw new Error('User not found')
+  }// make sure articles match user
+if(newsdel.user.toString() !== user.id){
+  res.status(401)
+  throw new Error('User not found')
+}
+
   if (!newsdel) {
     return res.send({ status: 404, error: true, message: `Error` });
   } else {
