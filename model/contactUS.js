@@ -4,16 +4,16 @@ const contactusSchema=mongoose.Schema({
 
     fullName:{
         type:String,
-        require:true
+        require:false
     },
 
-    text:{
+    Message:{
         type:String,
-        require:true
+        require:false
     },
     mail:{
         type:String,
-        require:true
+        require:false
     },
 
 },
