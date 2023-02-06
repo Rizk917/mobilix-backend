@@ -12,10 +12,11 @@ const newsSchema=mongoose.Schema({
         type:String,
         require:true
     },
-   // image:{
-    //    type:String,
-     //   require:true
-  //  },
+   image:{
+       type:String,
+        contentType:String,
+    //    require:false
+   },
     description:{
         type:String,
         require:true

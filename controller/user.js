@@ -64,36 +64,24 @@ const registerUser = asyncHandler(async (req, res) => {
 
 //My User
 const getMe = asyncHandler(async (req, res) => {
-  //   res.json({ message: "My User" });
-
-  // const {_id,name,email} = await User.findById(req.params.id);
-  // res.status(200).json({
-  //   id:_id,
-  //   name,
-  //   email
-  // })
+const{_id,name,email}=await User.findById(req.user.id)
+res.status(200).json({
+  id:_id,
+  name,
+  email
+})
 
 
-
-  const index = await User.findById(req.params.id);
-  if (!index) {
-    try {
-      const news = await User.find();
-      console.log("news: ", news);
-      res.status(200).json(news);
-    } catch (err) {
-      res.json({ message: err });
-    }
-  } else {
-    //view one article
-    try {
-      const news = await User.find(index);
-      res.status(200).json(index);
-    } catch (err) {
-      res.json({ message: err });
-    }
-  }
 });
+
+
+
+
+
+
+
+
+
 // Gen JWT 
 const generateToken=(id)=>{
   return jwt.sign({id},process.env.JWT_SECRET,{expiresIn:'30d',})
