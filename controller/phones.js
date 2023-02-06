@@ -1,7 +1,21 @@
 const express = require("express");
-
+const multer = require("multer");
+const { dirname } = require("path");
+const path = require("path");
 const phonesModels = require("../model/phones");
 // const UserModels=require("../model/user")
+// image
+const Storage= multer.diskStorage({
+  destination:"uploads",
+  filename:(req,file,cb)=> {
+    cb(null,file.originalname)
+  }
+});
+const upload=multer({
+  storage:Storage,
+
+});
+/////////////////////////////////////////////
 
 //view all the phones
 const getphones = async (req, res) => {
@@ -22,29 +36,23 @@ const getphones = async (req, res) => {
     }
   }
 };
-
+// const xyz= require('../uploads')
 //add new phones article
 const postphones = async (req, res) => {
-  if (
-    !req.body.phoneModel ||
-    !req.body.display ||
-    !req.body.memory ||
-    !req.body.body ||
-    !req.body.camera ||
-    !req.body.vendor ||
-    !req.body.prodDate 
-  ) {
+  console.log(req.file)
+  if (!req.body) {
     res.status(400).json({ message: "Error" });
   } else {
     const phonesg = await phonesModels.create({
-    //   user:req.user.id,
-    phoneModel: req.body.phoneModel,
+      //   user:req.user.id,
+      phoneModel: req.body.phoneModel,
       display: req.body.display,
       memory: req.body.memory,
       body: req.body.body,
       camera: req.body.camera,
       vendor: req.body.vendor,
       prodDate: req.body.prodDate,
+      image: req.file.path,
     });
     return res.status(200).json(phonesg);
   }
@@ -52,31 +60,33 @@ const postphones = async (req, res) => {
 /////////////////////////////////////////////////////////////////////////
 //Update a phones article
 const updatephones = async (req, res) => {
- const articlee=await phonesModels.findById(req.params.id)
+  const articlee = await phonesModels.findById(req.params.id);
 
-//   const user=await UserModels.findById(req.user.id)
-//   if(!user){ // check user
-//     res.status(401)
-//     throw new Error('User not found')
-//   }
-// if(articlee.user.toString()!== user.id){
-//   res.status(401)// make sure articles match user
-//   throw new Error('User not found')
-// }
+  //   const user=await UserModels.findById(req.user.id)
+  //   if(!user){ // check user
+  //     res.status(401)
+  //     throw new Error('User not found')
+  //   }
+  // if(articlee.user.toString()!== user.id){
+  //   res.status(401)// make sure articles match user
+  //   throw new Error('User not found')
+  // }
 
-if(!articlee){
-    res.status(400)
-throw new Error('Article not found')
-}
-const updatedphones=await phonesModels.findByIdAndUpdate(req.params.id,req.body,{
-    new:true,
-})
-res.status(200).json(updatedphones)
+  if (!articlee) {
+    res.status(400);
+    throw new Error("Article not found");
+  }
+  const updatedphones = await phonesModels.findByIdAndUpdate(
+    req.params.id,
+    req.body,
+    {
+      new: true,
+    }
+  );
+  res.status(200).json(updatedphones);
 };
 
 /////////////////////////////////////////////////////////////
-
-
 
 //this works alsooo
 // const updatephones = async (req, res) => {
@@ -107,19 +117,18 @@ res.status(200).json(updatedphones)
 
 //delete a phones
 const deletephones = async (req, res) => {
-
   const phonesdel = await phonesModels.findById(req.params.id);
 
-//   const user=await UserModels.findById(req.user.id)
+  //   const user=await UserModels.findById(req.user.id)
   // check user
-//   if(!user){ 
-//     res.status(401)
-//     throw new Error('User not found')
-//   }// make sure articles match user
-// if(phonesdel.user.toString() !== user.id){
-//   res.status(401)
-//   throw new Error('User not found')
-// }
+  //   if(!user){
+  //     res.status(401)
+  //     throw new Error('User not found')
+  //   }// make sure articles match user
+  // if(phonesdel.user.toString() !== user.id){
+  //   res.status(401)
+  //   throw new Error('User not found')
+  // }
 
   if (!phonesdel) {
     return res.send({ status: 404, error: true, message: `Error` });
@@ -134,4 +143,5 @@ module.exports = {
   postphones,
   deletephones,
   updatephones,
+  upload,
 };

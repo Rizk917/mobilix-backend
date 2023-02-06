@@ -41,5 +41,6 @@ app.use("/user",UserRoutes);
 app.use("/contactus", contactusRoutes);
 app.use("/phones", phonesRoute);
 app.use('/uploads',express.static('uploads'))
+
 const port = process.env.PORT || 3000;
 app.listen(port, console.log(`Listening on port ${port}...`));

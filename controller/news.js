@@ -20,9 +20,11 @@ const upload=multer({
 //view all the news
 const getnews = async (req, res) => {
   const index = await newsModels.findById(req.params.id);
+  console.log(index)
   if (!index) {
     try {
-      const news = await newsModels.find({ user: req.user.id });
+      const news = await newsModels.find();
+      console.log(news)
       res.status(200).json(news);
     } catch (err) {
       res.json({ message: err });
@@ -54,7 +56,7 @@ const postnews = async (req, res) => {
       user: req.user.id,
       title: req.body.title,
       description: req.body.description,
-      date: req.body.date,
+      date: req.body && req.body.date ? req.body.date : null,
       article: req.body.article,
       author: req.body.author,
       image: req.file.path

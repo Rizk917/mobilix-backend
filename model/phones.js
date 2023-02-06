@@ -12,10 +12,9 @@ const phonesSchema=mongoose.Schema({
         type:String,
         require:true
     },
-   // image:{
-    //    type:String,
-     //   require:true
-  //  },
+   image:{
+       type:String,
+   },
     body:{
         type:String,
         require:true

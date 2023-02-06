@@ -13,12 +13,13 @@ const {
   updateNews,
   upload,
 } = require("../controller/news");
+
 //cleanest way
-router.route("/").get(protect, getnews).post(protect, upload.single("image"),postnews);
+router.route("/").get(getnews).post(protect, upload.single("image"),postnews);
 router.route("/:id").put(protect,upload.single("image"), updateNews).delete(protect, deletenews);
 
 // clean way
-// router.get('/', newsController.getnews);
+// router.get('/', getnews);
 // router.post('/', newsController.postnews);
 // router.put('/:id',newsController.updateNews);
 // router.delete('/:id', newsController.deletenews);
