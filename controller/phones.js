@@ -39,7 +39,7 @@ const getphones = async (req, res) => {
 // const xyz= require('../uploads')
 //add new phones article
 const postphones = async (req, res) => {
-  console.log(req.file)
+  console.log("42 ",req.file)
   if (!req.body) {
     res.status(400).json({ message: "Error" });
   } else {
