@@ -23,7 +23,7 @@ const phonesSchema=mongoose.Schema({
         type:String,
         require:true
     },
-    vendor:{
+    description:{
         type:String,
         require:true
     },

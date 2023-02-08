@@ -28,7 +28,7 @@ const getphones = async (req, res) => {
       res.json({ message: err });
     }
   } else {
-    //view one article
+    //view one phone
     try {
       res.status(200).json(index);
     } catch (err) {
