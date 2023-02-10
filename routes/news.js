@@ -5,7 +5,7 @@ const router = express.Router();
 // const {getnews,postnews,deletenews}=require("../controller/news");
 
 // const newsController = require("../controller/news");
-const { protect } = require("../middleware/authMiddleware");
+const { } = require("../middleware/authMiddleware");
 const {
   getnews,
   postnews,
@@ -15,8 +15,8 @@ const {
 } = require("../controller/news");
 
 //cleanest way
-router.route("/").get(getnews).post(protect, upload.single("image"),postnews);
-router.route("/:id").put(protect,upload.single("image"), updateNews).delete(protect, deletenews);
+router.route("/").get(getnews).post(upload.single("image"),postnews);
+router.route("/:id").put(upload.single("image"), updateNews).delete( deletenews);
 
 // clean way
 // router.get('/', getnews);

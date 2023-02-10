@@ -27,6 +27,10 @@ const phonesSchema=mongoose.Schema({
         type:String,
         require:true
     },
+    vendor:{
+        type:String,
+        require:true
+    },
     
     isDeleted:{
         type:Boolean,
