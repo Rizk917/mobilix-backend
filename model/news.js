@@ -1,12 +1,12 @@
 const mongoose = require("mongoose");
 const newsSchema=mongoose.Schema({
 
-    user:{
-        type: mongoose.Schema.Types.ObjectId,
-        required:true,
-        ref:'User',
+    // user:{
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     required:true,
+    //     ref:'User',
 
-    },
+    // },
 
     title:{
         type:String,
@@ -14,8 +14,6 @@ const newsSchema=mongoose.Schema({
     },
    image:{
        type:String,
-        contentType:String,
-    //    require:false
    },
     description:{
         type:String,
