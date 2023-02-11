@@ -46,7 +46,6 @@ const postnews = async (req, res) => {
     res.status(400).json({ message: "Error" });
   } else {
     const newsg = await newsModels.create({
-      user: req.user.id,
       title: req.body.title,
       description: req.body.description,
       date: req.body && req.body.date ? req.body.date : null,
