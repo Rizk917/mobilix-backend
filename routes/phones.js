@@ -12,7 +12,7 @@ upload
 
 
 router.route('/').get(getphones).post(upload.single("image"),postphones)
-router.route('/:id').put(updatephones, upload.single("image")).delete(deletephones)
+router.route('/:id').get(getphones).put(updatephones, upload.single("image")).delete(deletephones)
 
 
 

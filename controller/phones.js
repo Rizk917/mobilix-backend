@@ -1,6 +1,6 @@
 const express = require("express");
 const multer = require("multer");
-const { dirname } = require("path");
+
 const path = require("path");
 const phonesModels = require("../model/phones");
 // const UserModels=require("../model/user")
@@ -28,7 +28,7 @@ const getphones = async (req, res) => {
       res.json({ message: err });
     }
   } else {
-    //view one article
+    //view one phone
     try {
       res.status(200).json(index);
     } catch (err) {
@@ -39,7 +39,7 @@ const getphones = async (req, res) => {
 // const xyz= require('../uploads')
 //add new phones article
 const postphones = async (req, res) => {
-  console.log(req.file)
+  console.log("42 ",req.file)
   if (!req.body) {
     res.status(400).json({ message: "Error" });
   } else {

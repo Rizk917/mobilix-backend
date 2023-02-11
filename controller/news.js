@@ -3,14 +3,14 @@ const multer = require("multer");
 const newsModels = require("../model/news");
 const UserModels = require("../model/user");
 // image
-const Storage= multer.diskStorage({
-  destination:"uploads",
-  filename:(req,file,cb)=> {
-    cb(null,file.originalname)
-  }
+const Storage = multer.diskStorage({
+  destination: "uploads",
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
+  },
 });
-const upload=multer({
-  storage:Storage,
+const upload = multer({
+  storage: Storage,
   // limits:{
   //   fileSize:1024*1024*6
   // },
@@ -20,11 +20,11 @@ const upload=multer({
 //view all the news
 const getnews = async (req, res) => {
   const index = await newsModels.findById(req.params.id);
-  console.log(index)
+  console.log(index);
   if (!index) {
     try {
       const news = await newsModels.find();
-      console.log(news)
+      console.log(news);
       res.status(200).json(news);
     } catch (err) {
       res.json({ message: err });
@@ -42,25 +42,16 @@ const getnews = async (req, res) => {
 
 //add new news article
 const postnews = async (req, res) => {
-  if (
-    !req.body.title ||
-    !req.body.description ||
-    !req.body.date ||
-    !req.body.article ||
-    !req.body.author
-  ) {
+  if (!req.body) {
     res.status(400).json({ message: "Error" });
   } else {
-
     const newsg = await newsModels.create({
-      user: req.user.id,
       title: req.body.title,
       description: req.body.description,
       date: req.body && req.body.date ? req.body.date : null,
       article: req.body.article,
       author: req.body.author,
-      image: req.file.path
-      ,
+      image: req.file.path,
     });
     return res.status(200).json(newsg);
   }
@@ -69,16 +60,16 @@ const postnews = async (req, res) => {
 //Update a news article
 const updateNews = async (req, res) => {
   const articlee = await newsModels.findById(req.params.id);
-  const user = await UserModels.findById(req.user.id);
-  if (!user) {
-    // check user
-    res.status(401);
-    throw new Error("User not found");
-  }
-  if (articlee.user.toString() !== user.id) {
-    res.status(401); // make sure articles match user
-    throw new Error("User not found");
-  }
+  // const user = await UserModels.findById(req.user.id);
+  // if (!user) {
+  //   // check user
+  //   res.status(401);
+  //   throw new Error("User not found");
+  // }
+  // if (articlee.user.toString() !== user.id) {
+  //   res.status(401); // make sure articles match user
+  //   throw new Error("User not found");
+  // }
 
   if (!articlee) {
     res.status(400);
@@ -126,16 +117,16 @@ const updateNews = async (req, res) => {
 //delete a news
 const deletenews = async (req, res) => {
   const newsdel = await newsModels.findById(req.params.id);
-  const user = await UserModels.findById(req.user.id);
+  // const user = await UserModels.findById(req.user.id);
   // check user
-  if (!user) {
-    res.status(401);
-    throw new Error("User not found");
-  } // make sure articles match user
-  if (newsdel.user.toString() !== user.id) {
-    res.status(401);
-    throw new Error("User not found");
-  }
+  // if (!user) {
+  //   res.status(401);
+  //   throw new Error("User not found");
+  // } // make sure articles match user
+  // if (newsdel.user.toString() !== user.id) {
+  //   res.status(401);
+  //   throw new Error("User not found");
+  // }
 
   if (!newsdel) {
     return res.send({ status: 404, error: true, message: `Error` });
